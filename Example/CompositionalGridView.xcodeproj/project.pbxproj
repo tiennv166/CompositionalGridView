@@ -11,9 +11,16 @@
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		607FACDD1AFB9204008FA782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Assets.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		A13E058F29F2B03F0076A63D /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13E058E29F2B03F0076A63D /* ModelFactory.swift */; };
+		A13E059229F2C7ED0076A63D /* GridItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13E059029F2C7ED0076A63D /* GridItemCell.swift */; };
+		A13E059329F2C7ED0076A63D /* GridItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13E059129F2C7ED0076A63D /* GridItemCell.xib */; };
+		A1A3925B29F28B00008E3E8A /* OutlineItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A3925929F28B00008E3E8A /* OutlineItemCell.swift */; };
+		A1A3925C29F28B00008E3E8A /* OutlineItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */; };
+		A1A3926629F2A3B0008E3E8A /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A3926429F2A3AF008E3E8A /* GridViewController.swift */; };
+		A1A3926729F2A3B0008E3E8A /* GridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1A3926529F2A3AF008E3E8A /* GridViewController.xib */; };
 		DC6F0394543326F6A3D08C7D /* Pods_CompositionalGridView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE92EFF221E80BF05E2EAAD /* Pods_CompositionalGridView_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,12 +47,19 @@
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* CompositionalGridView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompositionalGridView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		758CC4B7FFB02A7A52FBEFA1 /* Pods-CompositionalGridView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CompositionalGridView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-CompositionalGridView_Tests/Pods-CompositionalGridView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		A13E058E29F2B03F0076A63D /* ModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		A13E059029F2C7ED0076A63D /* GridItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GridItemCell.swift; path = Cells/GridItemCell.swift; sourceTree = "<group>"; };
+		A13E059129F2C7ED0076A63D /* GridItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GridItemCell.xib; path = Cells/GridItemCell.xib; sourceTree = "<group>"; };
+		A1A3925929F28B00008E3E8A /* OutlineItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OutlineItemCell.swift; path = Cells/OutlineItemCell.swift; sourceTree = "<group>"; };
+		A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = OutlineItemCell.xib; path = Cells/OutlineItemCell.xib; sourceTree = "<group>"; };
+		A1A3926429F2A3AF008E3E8A /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
+		A1A3926529F2A3AF008E3E8A /* GridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridViewController.xib; sourceTree = "<group>"; };
 		A20DE210BC94FEC42EB154F0 /* Pods_CompositionalGridView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CompositionalGridView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,10 +127,13 @@
 		607FACD21AFB9204008FA782 /* Example for CompositionalGridView */ = {
 			isa = PBXGroup;
 			children = (
+				A13E058D29F2B03F0076A63D /* Model */,
+				A1A3926329F2A3AF008E3E8A /* ViewControllers */,
+				A1A3925829F28A56008E3E8A /* Cells */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDC1AFB9204008FA782 /* Assets.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
@@ -157,6 +174,34 @@
 				07F911578317841A9D04129F /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		A13E058D29F2B03F0076A63D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A13E058E29F2B03F0076A63D /* ModelFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A1A3925829F28A56008E3E8A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A1A3925929F28B00008E3E8A /* OutlineItemCell.swift */,
+				A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */,
+				A13E059029F2C7ED0076A63D /* GridItemCell.swift */,
+				A13E059129F2C7ED0076A63D /* GridItemCell.xib */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		A1A3926329F2A3AF008E3E8A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A1A3926429F2A3AF008E3E8A /* GridViewController.swift */,
+				A1A3926529F2A3AF008E3E8A /* GridViewController.xib */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,8 +253,8 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
-				ORGANIZATIONNAME = CocoaPods;
+				LastUpgradeCheck = 1420;
+				ORGANIZATIONNAME = tiennv166;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -247,9 +292,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1A3926729F2A3B0008E3E8A /* GridViewController.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				A13E059329F2C7ED0076A63D /* GridItemCell.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				607FACDD1AFB9204008FA782 /* Assets.xcassets in Resources */,
+				A1A3925C29F28B00008E3E8A /* OutlineItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +405,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A13E059229F2C7ED0076A63D /* GridItemCell.swift in Sources */,
+				A1A3926629F2A3B0008E3E8A /* GridViewController.swift in Sources */,
+				A13E058F29F2B03F0076A63D /* ModelFactory.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				A1A3925B29F28B00008E3E8A /* OutlineItemCell.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -412,14 +465,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -457,6 +513,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -465,14 +522,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
