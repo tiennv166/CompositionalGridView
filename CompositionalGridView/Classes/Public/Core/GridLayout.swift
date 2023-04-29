@@ -37,9 +37,13 @@ extension GridLayout {
         }
     }
     
+    /// Represents the style of the group in the `CompositionalGridView`.
+    ///
+    /// Use this enumeration to set the style of the group in the `CompositionalGridView`.
+    /// Each style specifies how the items in the group should be laid out, either based on fixed or dynamic dimensions, and whether the group scrolls horizontally or vertically.
     public enum GroupStyle: Equatable {
         
-        // wrap text based on the size of each item and the screen size
+        // the items are wrapped to fit the available space, based on the size of each item and the screen size
         case normal
         
         // fractional width & same height for all items
@@ -73,6 +77,25 @@ extension GridLayout {
     public enum ViewType {
         case cell(AnyClass) // CellType
         case selfHandling // use for embeded UIView/UIViewController in a cell
+        case header(AnyClass) // use for header in a section
+        case footer(AnyClass) // use for footer in a section
+        
+        var isSupplementary: Bool {
+            switch self {
+            case .header, .footer: return true
+            case .cell, .selfHandling: return false
+            }
+        }
+        
+        var isHeader: Bool {
+            if case .header = self { return true }
+            return false
+        }
+        
+        var isFooter: Bool {
+            if case .footer = self { return true }
+            return false
+        }
     }
 }
 

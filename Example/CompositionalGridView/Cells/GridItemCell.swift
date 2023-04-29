@@ -30,11 +30,6 @@ final class GridItemCell: UICollectionViewCell {
 
     @IBOutlet private weak var gridImageView: UIImageView!
     @IBOutlet private weak var indexLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 }
 
 extension GridItemCell: GridCellConfigurable {

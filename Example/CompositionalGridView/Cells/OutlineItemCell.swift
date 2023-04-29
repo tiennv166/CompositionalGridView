@@ -36,7 +36,7 @@ struct OutlineItemCellModel: Equatable, GridItemModelConfigurable {
     var reuseIdentifier: String { "OutlineItemCell" }
     var viewType: GridLayout.ViewType { .cell(OutlineItemCell.self) }
     var itemSize: GridLayout.Size { .init(width: .fit, height: .estimated(60)) }
-    var layoutIndex: GridLayout.Index { .init(section: GridLayout.Section(index: section, style: .normal)) }
+    var layoutIndex: GridLayout.Index { .init(section: GridLayout.Section(index: section, style: .dynamicHeightColumn(1))) }
 }
 
 // MARK: OutlineItemCell

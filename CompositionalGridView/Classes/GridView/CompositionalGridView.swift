@@ -12,9 +12,29 @@ import UIKit
 // MARK: CompositionalGridViewDelegate
 
 public protocol CompositionalGridViewDelegate: AnyObject {
+    
+    /// Tells the delegate that the grid view needs to load more data.
+    ///
+    /// - Parameter gridView: The `CompositionalGridView` instance that triggered the event.
     func gridViewDidTriggerLoadMore(_ gridView: CompositionalGridView)
+    
+    /// Tells the delegate that the grid view needs to reload data.
+    ///
+    /// - Parameter gridView: The `CompositionalGridView` instance that triggered the event.
     func gridViewDidTriggerReload(_ gridView: CompositionalGridView)
+    
+    /// Tells the delegate that an item in the grid view was selected.
+    ///
+    /// - Parameters:
+    ///   - gridView: The `CompositionalGridView` instance that triggered the event.
+    ///   - item: The `GridItemModelConfigurable` instance that was selected.
     func gridViewDidSelectItem(_ gridView: CompositionalGridView, item: GridItemModelConfigurable)
+    
+    /// Tells the delegate that an event occurred in a grid cell.
+    ///
+    /// - Parameters:
+    ///   - gridView: The `CompositionalGridView` instance that triggered the event.
+    ///   - event: The `GridCellEvent` instance that occurred.
     func gridViewDidTriggerEvent(_ gridView: CompositionalGridView, event: GridCellEvent)
 }
 
@@ -49,7 +69,7 @@ public final class CompositionalGridView: UIView {
     // MARK: - Private
     
     private weak var delegate: CompositionalGridViewDelegate?
-    private var containerViewController: UIViewController?
+    private weak var containerViewController: UIViewController?
     private var registedReuseIdentifiers = Set<String>()
     private var selfHandlingViews: [String: Any] = [:]
     @Published private var selfHandlingItems: [SelfHandlingItemModel: Bool] = [:]
@@ -122,7 +142,10 @@ public final class CompositionalGridView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = settings.backgroundColor
         collectionView.refreshControl = settings.isReloadEnabled ? refreshControl : nil
-        collectionView.contentInset = settings.contentInset
+        collectionView.contentInset = UIEdgeInsets(top: settings.contentInset.top,
+                                                   left: 0,
+                                                   bottom: settings.contentInset.bottom,
+                                                   right: 0)
         collectionView.isScrollEnabled = settings.isScrollEnabled
         if !settings.isLoadMoreEnabled {
             endLoading()
@@ -164,12 +187,17 @@ public final class CompositionalGridView: UIView {
 extension CompositionalGridView {
     private func createLayout() -> UICollectionViewLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIdx, environment -> NSCollectionLayoutSection? in
-            self?.viewModel?.makeLayoutSection(sectionIdx, environment: environment)
+            guard let self = self else { return nil }
+            let contentSize = environment.container.contentSize
+            let contentInsets = self.settings.contentInset
+            return self.viewModel?
+                .makeLayoutSection(sectionIdx, containerContentSize: contentSize, containerContentInsets: contentInsets)?
+                .layoutSection
         }
     }
     
     private func createDataSource() -> GridViewDataSource {
-        GridViewDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, data -> UICollectionViewCell? in
+        let source = GridViewDataSource(collectionView: collectionView) { [weak self] collectionView, indexPath, data -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: data.model.reuseIdentifier, for: indexPath)
             switch data.model.viewType {
             case .cell:
@@ -182,9 +210,24 @@ extension CompositionalGridView {
             case .selfHandling:
                 guard let selfHandlingCell = cell as? SelfHandlingCell else { return cell }
                 self?.addSelfHandlingViewIfNeeded(to: selfHandlingCell, model: data.model)
+            case .header, .footer: return nil
             }
             return cell
         }
+        
+        source.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            let item = self?.viewModel?.supplementaryItemOfSection(indexPath.section, kind: kind)
+            guard let model = item?.model else { return nil }
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: model.reuseIdentifier, for: indexPath)
+            guard let gridView = view as? GridSupplementaryViewConfigurable else { return view }
+            gridView.handleEvent { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.gridViewDidTriggerEvent(self, event: $0)
+            }
+            return gridView.configure(model)
+        }
+        
+        return source
     }
 }
 
@@ -212,40 +255,91 @@ extension CompositionalGridView: UICollectionViewDelegate {
 // MARK: - publics
 
 extension CompositionalGridView {
+    
+    /// Updates the items in the grid view with new data.
+    ///
+    /// Use this method to update the items displayed in the grid view with new data.
+    ///
+    /// - Parameters:
+    ///   - items: The new items to display in the grid view.
+    ///   - hasNext: A Boolean value that indicates whether there is more data available to load.
     public func updateItems(_ items: [GridItemModelConfigurable], hasNext: Bool = false) {
         endLoading(hasNext: hasNext)
         self.items = items
     }
     
+    /// Sets the delegate for the grid view.
+    ///
+    /// Use this method to set the delegate for the `CompositionalGridView` instance.
+    /// The delegate must conform to the `CompositionalGridViewDelegate` protocol, which defines methods for handling events in the grid view.
+    ///
+    /// - Parameter delegate: The delegate to set for the grid view.
     public func setDelegate(_ delegate: CompositionalGridViewDelegate) {
         self.delegate = delegate
     }
     
+    /// Ends the loading animation in the grid view.
+    ///
+    /// - Parameter hasNext: A Boolean value that indicates whether there is more data available to load.
     public func endLoading(hasNext: Bool) {
         self.hasNext = hasNext
         endLoading()
     }
     
+    /// Adds the grid view to a specified view and view controller.
+    ///
+    /// Use this method to add the `CompositionalGridView` instance to a specified view and view controller.
+    /// The `view` parameter is the view to which the grid view is added, and the optional `viewController` parameter is the view controller that manages the view.
+    ///
+    /// - Parameters:
+    ///   - view: The view to which to add the grid view.
+    ///   - viewController: The view controller that manages the view.
     public func addTo(_ view: UIView, in viewController: UIViewController? = nil) {
         containerViewController = viewController
         fill(in: view)
     }
     
+    /// Adds a self-handling logic item to the grid view.
+    ///
+    /// Use this method to add a `SelfHandlingItemModel` instance, which is an item that handles its own events, to the `CompositionalGridView` instance.
+    ///
+    /// - Parameters:
+    ///   - item: The item to add to the grid view.
+    ///   - viewController: The view controller that links to the item.
+    ///   - isHidden: A Boolean value that indicates whether the item is initially hidden.
     public func addSelfHandlingLogicItem(_ item: SelfHandlingItemModel, viewController: UIViewController, isHidden: Bool) {
         selfHandlingViews[item.identity] = viewController
         selfHandlingItems[item] = !isHidden
     }
 
+    /// Adds a self-handling logic item to the grid view.
+    ///
+    /// Use this method to add a `SelfHandlingItemModel` instance, which is an item that handles its own events, to the `CompositionalGridView` instance.
+    ///
+    /// - Parameters:
+    ///   - item: The item to add to the grid view.
+    ///   - view: The view that links to the item.
+    ///   - isHidden: A Boolean value that indicates whether the item is initially hidden.
     public func addSelfHandlingLogicItem(_ item: SelfHandlingItemModel, view: UIView, isHidden: Bool) {
         selfHandlingViews[item.identity] = view
         selfHandlingItems[item] = !isHidden
     }
     
+    /// Sets the hidden state of a self-handling item with the specified identity.
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that indicates whether the item should be hidden.
+    ///   - identity: A unique string that identifies the self-handling item.
     public func setHiddenItem(_ isHidden: Bool, identity: String) {
         guard let item = selfHandlingItems.keys.first(where: { $0.identity == identity }) else { return }
         selfHandlingItems[item] = !isHidden
     }
     
+    /// Sets the settings for the grid view.
+    ///
+    /// Use this method to set the `GridViewSettings` instance, which defines the appearance and behavior of the `CompositionalGridView` instance.
+    ///
+    /// - Parameter settings: The settings to set for the grid view.
     public func setSettings(_ settings: GridViewSettings) {
         self.settings = settings
     }
@@ -254,30 +348,58 @@ extension CompositionalGridView {
 // CompositionalGridView+UICollectionView
 
 extension CompositionalGridView {
+    
+    /// The size of the grid view’s content area.
     public var contentSize: CGSize { collectionView.contentSize }
+    
+    /// The current scroll offset of the grid view’s content.
     public var contentOffset: CGPoint { collectionView.contentOffset }
+    
+    /// An array of cells that are currently visible in the grid view.
+    /// This array includes cells that are fully or partially visible in the grid view’s content area.
     public var visibleCells: [UICollectionViewCell] { collectionView.visibleCells }
     
+    /// Updates the layout of the grid view.
     public func updateLayout() {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
+    /// Reloads all of the data for the grid view.
     public func reloadData() {
         collectionView.reloadData()
     }
-        
+      
+    /// Scrolls the grid view’s content to the specified offset.
+    ///
+    /// - Parameters:
+    ///   - offset: The point at which to set the content offset. The point is specified in the grid view's bounds coordinates.
+    ///   - animated: A Boolean value that determines whether the scrolling should be animated.
     public func scrollToOffset(_ offset: CGPoint, animated: Bool) {
         collectionView.setContentOffset(offset, animated: animated)
     }
     
+    /// Scrolls the grid view’s content so that the specified item is visible.
+    ///
+    /// - Parameters:
+    ///   - index: The index path of the item to scroll to.
+    ///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes.
+    ///   - animated: A Boolean value that determines whether the scrolling should be animated.
     public func scrollToItem(at index: IndexPath, scrollPosition: UICollectionView.ScrollPosition, animated: Bool) {
         collectionView.scrollToItem(at: index, at: scrollPosition, animated: animated)
     }
     
+    /// Returns the index path of the specified cell.
+    ///
+    /// - Parameter cell: A cell object belonging to the grid view.
+    /// - Returns: The index path of the cell or `nil` if the specified cell is not visible or is not a cell in the grid view.
     public func indexPath(for cell: UICollectionViewCell) -> IndexPath? {
         collectionView.indexPath(for: cell)
     }
     
+    /// Returns the index path of the specified item.
+    ///
+    /// - Parameter item: An item conforming to the `GridItemModelConfigurable` protocol.
+    /// - Returns: The index path of the item or `nil` if the specified item is not in the grid view.
     public func indexPath(for item: GridItemModelConfigurable) -> IndexPath? {
         guard let section = viewModel?.sections.first(where: { $0.containsItem(item) }) else { return nil }
         guard let row = section.index(of: item) else { return nil }
@@ -288,10 +410,19 @@ extension CompositionalGridView {
 // CompositionalGridView+Combine
 
 extension CompositionalGridView {
+    
+    /// A publisher emitting the content size of the grid view.
+    ///
+    /// Use this publisher to receive notifications when the content size of the `CompositionalGridView` instance changes.
+    /// The publisher emits the content size as a `CGSize` value and never fails.
     public var contentSizePublisher: AnyPublisher<CGSize, Never> {
         collectionView.publisher(for: \.contentSize, options: [.new]).eraseToAnyPublisher()
     }
     
+    /// A publisher emitting the content offset of the grid view.
+    ///
+    /// Use this publisher to receive notifications when the content offset of the `CompositionalGridView` instance changes.
+    /// The publisher emits the content offset as a `CGPoint` value and never fails.
     public var contentOffsetPublisher: AnyPublisher<CGPoint, Never> {
         collectionView.publisher(for: \.contentOffset, options: [.new]).eraseToAnyPublisher()
     }

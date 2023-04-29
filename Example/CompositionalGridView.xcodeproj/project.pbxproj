@@ -13,10 +13,12 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Assets.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		A13E058F29F2B03F0076A63D /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13E058E29F2B03F0076A63D /* ModelFactory.swift */; };
 		A13E059229F2C7ED0076A63D /* GridItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13E059029F2C7ED0076A63D /* GridItemCell.swift */; };
 		A13E059329F2C7ED0076A63D /* GridItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13E059129F2C7ED0076A63D /* GridItemCell.xib */; };
+		A184333529FC468F00DAD95F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A184333329FC468F00DAD95F /* HeaderView.swift */; };
+		A184333629FC468F00DAD95F /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A184333429FC468F00DAD95F /* HeaderView.xib */; };
+		A184333C2A00B3E300DAD95F /* NormalStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A184333B2A00B3E300DAD95F /* NormalStyleTests.swift */; };
 		A1A3925B29F28B00008E3E8A /* OutlineItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A3925929F28B00008E3E8A /* OutlineItemCell.swift */; };
 		A1A3925C29F28B00008E3E8A /* OutlineItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */; };
 		A1A3926629F2A3B0008E3E8A /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A3926429F2A3AF008E3E8A /* GridViewController.swift */; };
@@ -51,11 +53,13 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* CompositionalGridView_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompositionalGridView_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		758CC4B7FFB02A7A52FBEFA1 /* Pods-CompositionalGridView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CompositionalGridView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-CompositionalGridView_Tests/Pods-CompositionalGridView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		A13E058E29F2B03F0076A63D /* ModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		A13E059029F2C7ED0076A63D /* GridItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GridItemCell.swift; path = Cells/GridItemCell.swift; sourceTree = "<group>"; };
 		A13E059129F2C7ED0076A63D /* GridItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GridItemCell.xib; path = Cells/GridItemCell.xib; sourceTree = "<group>"; };
+		A184333329FC468F00DAD95F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeaderView.swift; path = Cells/HeaderView.swift; sourceTree = "<group>"; };
+		A184333429FC468F00DAD95F /* HeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HeaderView.xib; path = Cells/HeaderView.xib; sourceTree = "<group>"; };
+		A184333B2A00B3E300DAD95F /* NormalStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalStyleTests.swift; sourceTree = "<group>"; };
 		A1A3925929F28B00008E3E8A /* OutlineItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OutlineItemCell.swift; path = Cells/OutlineItemCell.swift; sourceTree = "<group>"; };
 		A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = OutlineItemCell.xib; path = Cells/OutlineItemCell.xib; sourceTree = "<group>"; };
 		A1A3926429F2A3AF008E3E8A /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
@@ -152,8 +156,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				A184333B2A00B3E300DAD95F /* NormalStyleTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -191,6 +195,8 @@
 				A1A3925A29F28B00008E3E8A /* OutlineItemCell.xib */,
 				A13E059029F2C7ED0076A63D /* GridItemCell.swift */,
 				A13E059129F2C7ED0076A63D /* GridItemCell.xib */,
+				A184333329FC468F00DAD95F /* HeaderView.swift */,
+				A184333429FC468F00DAD95F /* HeaderView.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Assets.xcassets in Resources */,
 				A1A3925C29F28B00008E3E8A /* OutlineItemCell.xib in Resources */,
+				A184333629FC468F00DAD95F /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,17 +387,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CompositionalGridView_Tests/Pods-CompositionalGridView_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Nimble-Snapshots/Nimble_Snapshots.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSSnapshotTestCase/FBSnapshotTestCase.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble_Snapshots.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,6 +413,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				A1A3925B29F28B00008E3E8A /* OutlineItemCell.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				A184333529FC468F00DAD95F /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				A184333C2A00B3E300DAD95F /* NormalStyleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,7 +574,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -587,7 +590,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -609,7 +612,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CompositionalGridView_Example.app/CompositionalGridView_Example";
 			};
 			name = Debug;
@@ -628,7 +631,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CompositionalGridView_Example.app/CompositionalGridView_Example";
 			};
 			name = Release;

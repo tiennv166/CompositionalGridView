@@ -62,9 +62,9 @@ extension ExampleLayoutType {
         case .normal:
             return "Grid normal style"
         case .carouselStaticSize:
-            return "Carosel static size"
+            return "Carousel static size"
         case .carouselDynamicSize:
-            return "Carosel dynamic size"
+            return "Carousel dynamic size"
         case .combine:
             return "Grid view combine"
         }
@@ -83,37 +83,47 @@ extension ExampleLayoutType {
         case .carouselStaticSize:
             let items: [[GridItemModelConfigurable]] = [
                 [makeSectionTitle("Carousel 1 row", section: 0)],
-                makeGridViewStaticSizeCarouselData(section: 1, rows: 1),
-                [makeSectionTitle("Carousel 2 rows", section: 2)],
-                makeGridViewStaticSizeCarouselData(section: 3, rows: 2),
-                [makeSectionTitle("Carousel 3 rows", section: 4)],
-                makeGridViewStaticSizeCarouselData(section: 5, rows: 3),
-                [makeSectionTitle("Carousel 4 rows", section: 6)],
-                makeGridViewStaticSizeCarouselData(section: 7, rows: 4),
+                makeGridViewStaticSizeCarouselData(section: 0, rows: 1),
+                [makeSectionTitle("Carousel 2 rows", section: 1)],
+                makeGridViewStaticSizeCarouselData(section: 1, rows: 2),
+                [makeSectionTitle("Carousel 3 rows", section: 2)],
+                makeGridViewStaticSizeCarouselData(section: 2, rows: 3),
+                [makeSectionTitle("Carousel 4 rows", section: 3)],
+                makeGridViewStaticSizeCarouselData(section: 3, rows: 4)
             ]
             return items.flatMap { $0 }
         case .carouselDynamicSize:
             let items: [[GridItemModelConfigurable]] = [
                 [makeSectionTitle("Carousel 1 row", section: 0)],
-                makeGridViewDynamicSizeCarouselData(section: 1, rows: 1),
-                [makeSectionTitle("Carousel 2 rows", section: 2)],
-                makeGridViewDynamicSizeCarouselData(section: 3, rows: 2),
-                [makeSectionTitle("Carousel 3 rows", section: 4)],
-                makeGridViewDynamicSizeCarouselData(section: 5, rows: 3),
-                [makeSectionTitle("Carousel 4 rows", section: 6)],
-                makeGridViewDynamicSizeCarouselData(section: 7, rows: 4),
+                makeGridViewDynamicSizeCarouselData(section: 0, rows: 1),
+                [makeSectionTitle("Carousel 2 rows", section: 1)],
+                makeGridViewDynamicSizeCarouselData(section: 1, rows: 2),
+                [makeSectionTitle("Carousel 3 rows", section: 2)],
+                makeGridViewDynamicSizeCarouselData(section: 2, rows: 3),
+                [makeSectionTitle("Carousel 4 rows", section: 3)],
+                makeGridViewDynamicSizeCarouselData(section: 3, rows: 4)
             ]
             return items.flatMap { $0 }
         case .combine:
             let items: [[GridItemModelConfigurable]] = [
-                [makeSectionTitle(for: .listView, section: 0)],
-                makeListViewData(section: 1),
-                [makeSectionTitle(for: .carouselStaticSize, section: 2)],
-                makeGridViewStaticSizeCarouselData(section: 3, rows: 1),
+                [
+                    makeSectionTitle(
+                        for: .listView,
+                        section: 0,
+                        insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+                    )
+                ],
+                makeListViewData(section: 0),
+                [makeSectionTitle("Carousel 1 row", section: 1)],
+                makeGridViewStaticSizeCarouselData(section: 1, rows: 1),
+                [makeSectionTitle("Carousel 2 rows", section: 2)],
+                makeGridViewStaticSizeCarouselData(section: 2, rows: 2),
+                [makeSectionTitle("Carousel 3 rows", section: 3)],
+                makeGridViewDynamicSizeCarouselData(section: 3, rows: 3),
                 [makeSectionTitle(for: .gridViewStaticHeight, section: 4)],
-                makeGridViewStaticHeightData(section: 5),
-                [makeSectionTitle(for: .gridViewDynamicHeigt, section: 6)],
-                makeGridViewDynamicHeightData(section: 7)
+                makeGridViewStaticHeightData(section: 4),
+                [makeSectionTitle(for: .gridViewDynamicHeigt, section: 5)],
+                makeGridViewDynamicHeightData(section: 5)
             ]
             return items.flatMap { $0 }
         }
@@ -132,7 +142,7 @@ extension ExampleLayoutType {
             "7. Lorem ipsum dolor sit er elit lamet",
             "8. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
             "9. Lorem ipsum dolor sit er elit lamet",
-            "10. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+            "10. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
         ]
         return texts.map { OutlineItemCellModel(title: $0, section: section, hasViewAction: false) }
     }
@@ -195,8 +205,8 @@ extension ExampleLayoutType {
         )
         return (1...20).map { index in
             GridItemCellModel(
-                width: 160,
-                height: 100,
+                width: 150,
+                height: 80,
                 index: index,
                 layoutIndex: GridLayout.Index(section: sectionLayout)
             )
@@ -220,23 +230,11 @@ extension ExampleLayoutType {
         }
     }
     
-    private func makeSectionTitle(for layout: ExampleLayoutType, section: Int) -> OutlineItemCellModel {
-        OutlineItemCellModel(
-            title: layout.title,
-            section: section,
-            hasSeparator: false,
-            hasViewAction: false,
-            isBoldStyle: true
-        )
+    private func makeSectionTitle(for layout: ExampleLayoutType, section: Int, insets: UIEdgeInsets = .zero) -> HeaderModel {
+        HeaderModel(title: layout.title, section: section, insets: insets)
     }
     
-    private func makeSectionTitle(_ title: String, section: Int) -> OutlineItemCellModel {
-        OutlineItemCellModel(
-            title: title,
-            section: section,
-            hasSeparator: false,
-            hasViewAction: false,
-            isBoldStyle: true
-        )
+    private func makeSectionTitle(_ title: String, section: Int, insets: UIEdgeInsets = .zero) -> HeaderModel {
+        HeaderModel(title: title, section: section, insets: insets)
     }
 }

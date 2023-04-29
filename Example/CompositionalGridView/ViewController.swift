@@ -22,6 +22,12 @@ final class ViewController: UIViewController {
     private func configureGridView() {
         gridView.addTo(view, in: self)
         gridView.setDelegate(self)
+        gridView.setSettings(
+            GridViewSettings(
+                isScrollEnabled: true,
+                contentInset: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+            )
+        )
         gridView.updateItems(layouts.map { OutlineItemCellModel(title: $0.description) })
     }
 }

@@ -30,15 +30,39 @@ extension UICollectionView {
     func registerCell(for item: GridItemModelConfigurable) {
         switch item.viewType {
         case let .cell(cellType):
-            let bundle = Bundle(for: cellType)
-            if bundle.path(forResource: String(describing: cellType), ofType: "nib") != nil {
-                let nib = UINib(nibName: String(describing: cellType), bundle: bundle)
+            if let nib = getNib(from: cellType) {
                 register(nib, forCellWithReuseIdentifier: item.reuseIdentifier)
             } else {
                 register(cellType, forCellWithReuseIdentifier: item.reuseIdentifier)
             }
         case .selfHandling:
             register(SelfHandlingCell.self, forCellWithReuseIdentifier: item.reuseIdentifier)
+        case let .header(cellType):
+            registerSupplementaryView(
+                with: cellType,
+                reuseIdentifier: item.reuseIdentifier,
+                kind: UICollectionView.elementKindSectionHeader
+            )
+        case let .footer(cellType):
+            registerSupplementaryView(
+                with: cellType,
+                reuseIdentifier: item.reuseIdentifier,
+                kind: UICollectionView.elementKindSectionFooter
+            )
         }
     }
+    
+    private func registerSupplementaryView(with classType: AnyClass, reuseIdentifier: String, kind: String) {
+        if let nib = getNib(from: classType) {
+            register(nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: reuseIdentifier)
+        } else {
+            register(classType, forSupplementaryViewOfKind: kind, withReuseIdentifier: reuseIdentifier)
+        }
+    }
+}
+
+private func getNib(from classType: AnyClass) -> UINib? {
+    let bundle = Bundle(for: classType)
+    guard bundle.path(forResource: String(describing: classType), ofType: "nib") != nil else { return nil }
+    return UINib(nibName: String(describing: classType), bundle: bundle)
 }

@@ -31,6 +31,7 @@ struct GridViewItem: Hashable {
 struct GridViewSection {
     let index: Int
     let items: [GridViewItem]
+    let supplementaryItems: [GridViewItem]
     
     func containsItem(_ item: GridItemModelConfigurable) -> Bool {
         items.contains { $0.model.isEqualTo(item) }
@@ -39,6 +40,37 @@ struct GridViewSection {
     func index(of item: GridItemModelConfigurable) -> Int? {
         items.firstIndex(where: { $0.model.isEqualTo(item) })
     }
+    
+    func supplementaryItem(kind: String) -> GridViewItem? {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            return supplementaryItems.first { $0.model.viewType.isHeader }
+        case UICollectionView.elementKindSectionFooter:
+            return supplementaryItems.first { $0.model.viewType.isFooter }
+        default: return nil
+        }
+    }
+}
+
+// MARK: GridViewLayoutSection
+
+final class GridViewLayoutSection {
+    let group: NSCollectionLayoutGroup
+    var contentInsets: NSDirectionalEdgeInsets = .zero
+    var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior = .none
+    var boundarySupplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] = []
+    
+    init(group: NSCollectionLayoutGroup) {
+        self.group = group
+    }
+    
+    var layoutSection: NSCollectionLayoutSection {
+        let layout = NSCollectionLayoutSection(group: group)
+        layout.contentInsets = contentInsets
+        layout.orthogonalScrollingBehavior = orthogonalScrollingBehavior
+        layout.boundarySupplementaryItems = boundarySupplementaryItems
+        return layout
+    }
 }
 
 // MARK: GridViewModel
@@ -46,7 +78,7 @@ struct GridViewSection {
 struct GridViewModel {
     let sections: [GridViewSection]
     
-    var allItems: [GridViewItem] { sections.flatMap(\.items) }
+    var allItems: [GridViewItem] { sections.flatMap { $0.items + $0.supplementaryItems } }
     
     init(items: [GridItemModelConfigurable], hasLoadMore: Bool) {
         let sortedItems = items.sorted(by: { $0.layoutIndex < $1.layoutIndex })
@@ -61,7 +93,10 @@ struct GridViewModel {
         }
         self.sections = sections.keys.sorted(by: { $0 < $1 })
             .compactMap { index -> GridViewSection? in
-                guard let items = sections[index], let firstItem = items.first else { return nil }
+                guard let allItems = sections[index] else { return nil }
+                let items = allItems.filter { !$0.model.viewType.isSupplementary }
+                let supplementaryItems = allItems.filter { $0.model.viewType.isSupplementary }
+                guard let firstItem = items.first else { return nil }
                 let sortedItems: [GridViewItem] = {
                     switch firstItem.model.layoutIndex.section.style {
                     case let .dynamicHeightColumn(value), let .dynamicSizeRow(value):
@@ -76,26 +111,39 @@ struct GridViewModel {
                     default: return items
                     }
                 }()
-                return GridViewSection(index: index, items: sortedItems)
+                return GridViewSection(index: index, items: sortedItems, supplementaryItems: supplementaryItems)
             }
             .enumerated()
-            .map { index, section in GridViewSection(index: index, items: section.items) }
+            .map { index, section in
+                GridViewSection(index: index, items: section.items, supplementaryItems: section.supplementaryItems)
+            }
+    }
+    
+    func supplementaryItemOfSection(_ sectionIndex: Int, kind: String) -> GridViewItem? {
+        sections.first(where: { $0.index == sectionIndex })?.supplementaryItem(kind: kind)
     }
     
     func makeLayoutSection(_ sectionIndex: Int,
-                           environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
+                           containerContentSize: CGSize,
+                           containerContentInsets: UIEdgeInsets) -> GridViewLayoutSection? {
         guard let section = sections.first(where: { $0.index == sectionIndex }) else { return nil }
         let items = section.items
         guard let firstItem = items.first else { return nil }
         let groupStyle = firstItem.model.layoutIndex.section.style
         let insets = firstItem.model.layoutIndex.section.contentInsets
-        let containerWidth = environment.container.effectiveContentSize.width - insets.left - insets.right
+            .increaseLeft(containerContentInsets.left)
+            .increaseRight(containerContentInsets.right)
+        let containerWidth = containerContentSize.width - insets.left - insets.right
         guard let group = makeLayoutGroup(groupStyle, items: items, containerWidth: containerWidth) else { return nil }
-        let layout = NSCollectionLayoutSection(group: group)
+        let layout = GridViewLayoutSection(group: group)
         if groupStyle.isOrthogonal {
             layout.orthogonalScrollingBehavior = .continuous
         }
         layout.contentInsets = insets.directionalEdgeInsets
+        let header = section.supplementaryView(for: UICollectionView.elementKindSectionHeader)
+        let footer = section.supplementaryView(for: UICollectionView.elementKindSectionFooter)
+        layout.boundarySupplementaryItems = [header, footer].compactMap { $0 }
+
         return layout
     }
 }
@@ -123,7 +171,7 @@ private extension GridViewModel {
         items.forEach { item in
             guard let lastRow = itemsIn2D.last else { return }
             let itemWidth = item.model.itemSize.widthValue(containerWidth: containerWidth)
-            if lastRow.rowWidth + itemSpacing + itemWidth <= containerWidth {
+            if lastRow.rowItems.isEmpty || (lastRow.rowWidth + itemSpacing + itemWidth <= containerWidth) {
                 // Update last row
                 itemsIn2D.removeLast()
                 let newRowItems = lastRow.rowItems + [item]
@@ -379,5 +427,38 @@ private extension GridViewItem {
 private extension UIEdgeInsets {
     var directionalEdgeInsets: NSDirectionalEdgeInsets {
         NSDirectionalEdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
+    }
+    
+    func increaseLeft(_ left: CGFloat) -> Self {
+        UIEdgeInsets(top: top, left: self.left + left, bottom: bottom, right: right)
+    }
+    
+    func increaseRight(_ right: CGFloat) -> Self {
+        UIEdgeInsets(top: top, left: left, bottom: bottom, right: self.right + right)
+    }
+}
+
+private extension GridViewSection {
+    func supplementaryView(for kind: String) -> NSCollectionLayoutBoundarySupplementaryItem? {
+        // Support only one header/footer inside one section
+        let item: GridViewItem?
+        let alignment: NSRectAlignment
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            item = supplementaryItems.first { $0.model.viewType.isHeader }
+            alignment = .top
+        case UICollectionView.elementKindSectionHeader:
+            item = supplementaryItems.first { $0.model.viewType.isFooter }
+            alignment = .bottom
+        default: return nil
+        }
+        guard let model = item?.model else { return nil }
+        let supplementaryLayout = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: model.itemSize.layoutSize,
+            elementKind: kind,
+            alignment: alignment
+        )
+        supplementaryLayout.pinToVisibleBounds = true
+        return supplementaryLayout
     }
 }
