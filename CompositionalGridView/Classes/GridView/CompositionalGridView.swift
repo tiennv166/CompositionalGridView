@@ -294,9 +294,23 @@ extension CompositionalGridView {
     /// - Parameters:
     ///   - view: The view to which to add the grid view.
     ///   - viewController: The view controller that manages the view.
-    public func addTo(_ view: UIView, in viewController: UIViewController? = nil) {
+    ///   - contraints: The closure to customize the constraints for the layout of the grid view within the provided view. By default, the grid view is constrained to the edges of the provided view.
+    public func addTo(
+        _ view: UIView,
+        in viewController: UIViewController? = nil,
+        contraints: (UIView, UIView) -> Void = { container, gridView in
+            container.addSubview(gridView)
+            gridView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                gridView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 0),
+                gridView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 0),
+                gridView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0),
+                gridView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: 0)
+            ])
+        }
+    ) {
         containerViewController = viewController
-        fill(in: view)
+        contraints(view, self)
     }
     
     /// Adds a self-handling logic item to the grid view.

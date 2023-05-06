@@ -317,7 +317,7 @@ extension OutlineItemCell: GridCellConfigurable {
 
 `CompositionalGridView` already has 2 public `publishers` - `contentSize` and `contentOffset` - which allow subscribers to listen to changes (using Swift `Combine`).
 
-[`CompositionalGridView+Combine`](CompositionalGridView/Classes/GridView/CompositionalGridView.swift#L404)
+[`CompositionalGridView+Combine`](CompositionalGridView/Classes/GridView/CompositionalGridView.swift#L428)
 
 If your project uses `RxSwift` instead of `Combine`, you can convert those publishers to `Observable` as shown below:
 
