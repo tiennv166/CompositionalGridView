@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/CompositionalGridView.svg?style=flat)](https://cocoapods.org/pods/CompositionalGridView)
 [![Platform](https://img.shields.io/cocoapods/p/CompositionalGridView.svg?style=flat)](https://cocoapods.org/pods/CompositionalGridView)
 
-A library that allows arranging views in grid or list format, scrolling horizontally or vertically with `just a few lines of code`. (No need to worry about `UITableView` or `UICollectionView`.)
+A library that allows arranging views in grid or list format, scrolling horizontally or vertically with `just a few lines of code`. (No longer need to worry about `UITableView` or `UICollectionView`.)
 
 ## Introduction
 `CompositionalGridView` provides several key features:
@@ -178,8 +178,7 @@ extension OutlineItemCellModel: GridItemModelConfigurable {
 Finally, make sure that the cell conforms to `GridCellConfigurable` protocol and overrides the `configure` function
 ```swift
 extension OutlineItemCell: GridCellConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionViewCell {
-        guard let cellModel = model as? OutlineItemCellModel else { return self }
+    func configure(_ model: OutlineItemCellModel) -> UICollectionViewCell {
         // configure your cell here with corresponding model
         ...
         return self
@@ -214,8 +213,7 @@ extension HeaderModel: GridItemModelConfigurable {
 Finally, make sure that the supplementary conforms to `GridSupplementaryViewConfigurable` protocol and overrides the `configure` function
 ```swift
 extension HeaderView: GridSupplementaryViewConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionReusableView {
-        guard let cellModel = model as? HeaderModel else { return self }
+    func configure(_ model: HeaderModel) -> UICollectionReusableView {
         // configure your view here with corresponding model
         ...
         return self

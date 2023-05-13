@@ -201,12 +201,12 @@ extension CompositionalGridView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: data.model.reuseIdentifier, for: indexPath)
             switch data.model.viewType {
             case .cell:
-                guard let gridCell = cell as? GridCellConfigurable else { return cell }
+                guard let gridCell = cell as? (any GridCellConfigurable) else { return cell }
                 gridCell.handleEvent { [weak self] in
                     guard let self = self else { return }
                     self.delegate?.gridViewDidTriggerEvent(self, event: $0)
                 }
-                return gridCell.configure(data.model)
+                return gridCell.configureModel(data.model) ?? cell
             case .selfHandling:
                 guard let selfHandlingCell = cell as? SelfHandlingCell else { return cell }
                 self?.addSelfHandlingViewIfNeeded(to: selfHandlingCell, model: data.model)
@@ -219,12 +219,12 @@ extension CompositionalGridView {
             let item = self?.viewModel?.supplementaryItemOfSection(indexPath.section, kind: kind)
             guard let model = item?.model else { return nil }
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: model.reuseIdentifier, for: indexPath)
-            guard let gridView = view as? GridSupplementaryViewConfigurable else { return view }
+            guard let gridView = view as? (any GridSupplementaryViewConfigurable) else { return view }
             gridView.handleEvent { [weak self] in
                 guard let self = self else { return }
                 self.delegate?.gridViewDidTriggerEvent(self, event: $0)
             }
-            return gridView.configure(model)
+            return gridView.configureModel(model) ?? view
         }
         
         return source

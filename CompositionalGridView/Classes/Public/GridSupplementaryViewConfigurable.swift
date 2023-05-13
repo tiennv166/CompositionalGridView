@@ -10,7 +10,10 @@ import Foundation
 import UIKit
 
 public protocol GridSupplementaryViewConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionReusableView
+    
+    associatedtype GridItemModel: GridItemModelConfigurable
+
+    func configure(_ model: GridItemModel) -> UICollectionReusableView
     func handleEvent(_ event: @escaping ((GridCellEvent) -> Void))
 }
 
@@ -19,7 +22,7 @@ public extension GridSupplementaryViewConfigurable {
 }
 
 public extension GridSupplementaryViewConfigurable where Self: UICollectionReusableView {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionReusableView {
+    func configure(_ model: GridItemModel) -> UICollectionReusableView {
         self
     }
 }

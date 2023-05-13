@@ -47,7 +47,7 @@ final class LoadMoreCell: UICollectionViewCell {
 }
 
 extension LoadMoreCell: GridCellConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionViewCell {
+    func configure(_ model: LoadMoreCellModel) -> UICollectionViewCell {
         if !loadingIndicator.isAnimating {
             loadingIndicator.startAnimating()
         }
