@@ -23,5 +23,5 @@ jobs:
     - name: Build
       run: xcodebuild clean build -scheme CompositionalGridView -destination "name=iPhone 14 Pro,OS=16.2"
     - name: Run tests
-      run: xcodebuild clean test -project CompositionalGridView.xcodeproj -scheme CompositionalGridView -destination "name=iPhone 14 Pro,OS=16.2"
+      run: xcodebuild clean test -project CompositionalGridView.xcodeproj -scheme CompositionalGridView-Example -destination "name=iPhone 14 Pro,OS=16.2"
 

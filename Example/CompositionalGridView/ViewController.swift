@@ -7,6 +7,7 @@
 //
 
 import CompositionalGridView
+import UIKit
 
 final class ViewController: UIViewController {
     

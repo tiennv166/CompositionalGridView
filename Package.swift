@@ -26,7 +26,7 @@ let package = Package(
                 .product(name: "Quick", package: "Quick"),
                 .product(name: "Nimble", package: "Nimble")
             ],
-            path: "Example/Tests"
+            path: "Tests"
         )
     ],
     swiftLanguageVersions: [.v5]

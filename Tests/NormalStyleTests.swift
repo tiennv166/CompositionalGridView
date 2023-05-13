@@ -6,8 +6,10 @@
 //  Copyright © 2023 tiennv166. All rights reserved.
 //
 
+import Foundation
 import Quick
 import Nimble
+import UIKit
 @testable import CompositionalGridView
 
 final class NormalStyleTests: QuickSpec {

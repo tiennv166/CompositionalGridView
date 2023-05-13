@@ -8,6 +8,7 @@
 
 import Combine
 import CompositionalGridView
+import UIKit
 
 final class GridViewController: UIViewController {
     

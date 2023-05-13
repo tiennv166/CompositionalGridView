@@ -8,6 +8,7 @@
 
 import CompositionalGridView
 import Foundation
+import UIKit
 
 enum ExampleLayoutType: Int {
     case listView
