@@ -42,10 +42,8 @@ Now we can solely focus on coding the data model, without needing to code the la
 
 ## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-An example app is available to showcase and allow you to test some of the features of `CompositionalGridView`. It can be found in `./Example/CompositionalGridView.xcworkspace`.
-
-Note: Make sure to use the `.xcworkspace` file, and not the `.xcodeproj` file.
+To run the example project, clone the repo, and open `CompositionalGridView.xcodeproj` from the code directory.
+An example app is available to showcase and allow you to test some of the features of `CompositionalGridView`.
 
 ## Requirements
 
