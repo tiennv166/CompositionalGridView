@@ -33,10 +33,9 @@ final class GridItemCell: UICollectionViewCell {
 }
 
 extension GridItemCell: GridCellConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionViewCell {
-        guard let cellModel = model as? GridItemCellModel else { return self }
-        gridImageView.image = cellModel.image
-        indexLabel.text = "\(cellModel.index)"
+    func configure(_ model: GridItemCellModel) -> UICollectionViewCell {
+        gridImageView.image = model.image
+        indexLabel.text = "\(model.index)"
         return self
     }
 }

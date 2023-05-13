@@ -41,6 +41,8 @@
 		A14F1FD02A0FD789004643CB /* CompositionalGridView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A14F1F6E2A0FA8A7004643CB /* CompositionalGridView.framework */; };
 		A14F1FEB2A0FDD3E004643CB /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = A14F1FEA2A0FDD3E004643CB /* Nimble */; };
 		A14F1FEE2A0FDD68004643CB /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = A14F1FED2A0FDD68004643CB /* Quick */; };
+		A14F1FF02A0FE201004643CB /* GridCellConfigurable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14F1FEF2A0FE201004643CB /* GridCellConfigurable+Extension.swift */; };
+		A14F1FF22A0FE216004643CB /* GridSupplementaryViewConfigurable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14F1FF12A0FE216004643CB /* GridSupplementaryViewConfigurable+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +92,8 @@
 		A14F1FB82A0FCEF2004643CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A14F1FCC2A0FD5B7004643CB /* NormalStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalStyleTests.swift; sourceTree = "<group>"; };
 		A14F1FCD2A0FD5B7004643CB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A14F1FEF2A0FE201004643CB /* GridCellConfigurable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridCellConfigurable+Extension.swift"; sourceTree = "<group>"; };
+		A14F1FF12A0FE216004643CB /* GridSupplementaryViewConfigurable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridSupplementaryViewConfigurable+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,8 @@
 				A14F1FAA2A0FCEF2004643CB /* UIView+Extension.swift */,
 				A14F1FAB2A0FCEF2004643CB /* UICollectionView+Extension.swift */,
 				A14F1FAC2A0FCEF2004643CB /* GridLayoutSize+Extension.swift */,
+				A14F1FEF2A0FE201004643CB /* GridCellConfigurable+Extension.swift */,
+				A14F1FF12A0FE216004643CB /* GridSupplementaryViewConfigurable+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -262,8 +268,8 @@
 		A14F1FAD2A0FCEF2004643CB /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				A14F1FAE2A0FCEF2004643CB /* GridCellConfigurable.swift */,
 				A14F1FAF2A0FCEF2004643CB /* Core */,
+				A14F1FAE2A0FCEF2004643CB /* GridCellConfigurable.swift */,
 				A14F1FB22A0FCEF2004643CB /* GridViewSettings.swift */,
 				A14F1FB32A0FCEF2004643CB /* SelfHandlingItemModel.swift */,
 				A14F1FB42A0FCEF2004643CB /* GridCellEvent.swift */,
@@ -491,8 +497,10 @@
 				A14F1FC42A0FCEF2004643CB /* GridViewSettings.swift in Sources */,
 				A14F1FC52A0FCEF2004643CB /* SelfHandlingItemModel.swift in Sources */,
 				A14F1FC62A0FCEF2004643CB /* GridCellEvent.swift in Sources */,
+				A14F1FF02A0FE201004643CB /* GridCellConfigurable+Extension.swift in Sources */,
 				A14F1FBE2A0FCEF2004643CB /* UIView+Extension.swift in Sources */,
 				A14F1FBA2A0FCEF2004643CB /* GridViewModel.swift in Sources */,
+				A14F1FF22A0FE216004643CB /* GridSupplementaryViewConfigurable+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

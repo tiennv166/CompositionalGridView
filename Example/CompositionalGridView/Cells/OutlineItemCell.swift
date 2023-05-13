@@ -56,13 +56,12 @@ final class OutlineItemCell: UICollectionViewCell {
 }
 
 extension OutlineItemCell: GridCellConfigurable {
-    func configure(_ model: GridItemModelConfigurable) -> UICollectionViewCell {
-        guard let cellModel = model as? OutlineItemCellModel else { return self }
-        title = cellModel.title
-        titleLabel.text = cellModel.title
-        separatorView.isHidden = !cellModel.hasSeparator
-        viewButton.isHidden = !cellModel.hasViewAction
-        if cellModel.isBoldStyle {
+    func configure(_ model: OutlineItemCellModel) -> UICollectionViewCell {
+        title = model.title
+        titleLabel.text = model.title
+        separatorView.isHidden = !model.hasSeparator
+        viewButton.isHidden = !model.hasViewAction
+        if model.isBoldStyle {
             titleLabel.font = .boldSystemFont(ofSize: 20)
         } else {
             titleLabel.font = .systemFont(ofSize: 16)
