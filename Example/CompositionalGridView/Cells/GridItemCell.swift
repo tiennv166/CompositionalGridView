@@ -32,11 +32,10 @@ final class GridItemCell: UICollectionViewCell {
     @IBOutlet private weak var indexLabel: UILabel!
 }
 
-extension GridItemCell: GridCellConfigurable {
-    func configure(_ model: GridItemCellModel) -> UICollectionViewCell {
+extension GridItemCell: GridReusableViewType {
+    func configure(_ model: GridItemCellModel) {
         gridImageView.image = model.image
         indexLabel.text = "\(model.index)"
-        return self
     }
 }
 

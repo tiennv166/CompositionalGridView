@@ -55,8 +55,8 @@ final class OutlineItemCell: UICollectionViewCell {
     }
 }
 
-extension OutlineItemCell: GridCellConfigurable {
-    func configure(_ model: OutlineItemCellModel) -> UICollectionViewCell {
+extension OutlineItemCell: GridReusableViewType {
+    func configure(_ model: OutlineItemCellModel) {
         title = model.title
         titleLabel.text = model.title
         separatorView.isHidden = !model.hasSeparator
@@ -66,7 +66,6 @@ extension OutlineItemCell: GridCellConfigurable {
         } else {
             titleLabel.font = .systemFont(ofSize: 16)
         }
-        return self
     }
     
     func handleEvent(_ event: @escaping ((GridCellEvent) -> Void)) {

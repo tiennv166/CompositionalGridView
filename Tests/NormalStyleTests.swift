@@ -279,6 +279,6 @@ private struct TestCellModel: GridItemModelConfigurable {
     var lineSpacing: CGFloat { 12 }
 }
 
-private class TestCell: UICollectionViewCell, GridCellConfigurable {
+private class TestCell: UICollectionViewCell, GridReusableViewType {
     typealias GridItemModel = TestCellModel
 }
