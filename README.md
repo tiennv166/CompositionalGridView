@@ -173,13 +173,12 @@ extension OutlineItemCellModel: GridItemModelConfigurable {
 }
 ```
 
-Finally, make sure that the cell conforms to `GridCellConfigurable` protocol and overrides the `configure` function
+Finally, make sure that the cell conforms to `GridReusableViewType` protocol and overrides the `configure` function
 ```swift
-extension OutlineItemCell: GridCellConfigurable {
-    func configure(_ model: OutlineItemCellModel) -> UICollectionViewCell {
+extension OutlineItemCell: GridReusableViewType {
+    func configure(_ model: OutlineItemCellModel) {
         // configure your cell here with corresponding model
         ...
-        return self
     }
 }
 ```
@@ -208,13 +207,12 @@ extension HeaderModel: GridItemModelConfigurable {
 }
 ```
 
-Finally, make sure that the supplementary conforms to `GridSupplementaryViewConfigurable` protocol and overrides the `configure` function
+Finally, make sure that the supplementary conforms to `GridReusableViewType` protocol and overrides the `configure` function
 ```swift
 extension HeaderView: GridSupplementaryViewConfigurable {
-    func configure(_ model: HeaderModel) -> UICollectionReusableView {
+    func configure(_ model: HeaderModel) {
         // configure your view here with corresponding model
         ...
-        return self
     }
 }
 ```
@@ -300,9 +298,9 @@ class OutlineItemCell: UICollectionViewCell {
 }
 ```
 
-Finally, ensure that your `OutlineItemCell` conforms to the `GridCellConfigurable` protocol and overrides the `handleEvent` function:
+Finally, ensure that your `OutlineItemCell` conforms to the `GridReusableViewType` protocol and overrides the `handleEvent` function:
 ```swift
-extension OutlineItemCell: GridCellConfigurable {
+extension OutlineItemCell: GridReusableViewType {
     func handleEvent(_ event: @escaping ((GridCellEvent) -> Void)) {
         eventHandler = event
     }
