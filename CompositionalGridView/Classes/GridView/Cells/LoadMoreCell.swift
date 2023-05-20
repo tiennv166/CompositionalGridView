@@ -46,11 +46,10 @@ final class LoadMoreCell: UICollectionViewCell {
     }
 }
 
-extension LoadMoreCell: GridCellConfigurable {
-    func configure(_ model: LoadMoreCellModel) -> UICollectionViewCell {
+extension LoadMoreCell: GridReusableViewType {
+    func configure(_ model: LoadMoreCellModel) {
         if !loadingIndicator.isAnimating {
             loadingIndicator.startAnimating()
         }
-        return self
     }
 }

@@ -38,11 +38,10 @@ final class HeaderView: UICollectionReusableView {
     
 }
 
-extension HeaderView: GridSupplementaryViewConfigurable {
-    func configure(_ model: HeaderModel) -> UICollectionReusableView {
+extension HeaderView: GridReusableViewType {
+    func configure(_ model: HeaderModel) {
         titleLabel.text = model.title
         titleLabelRight.constant = model.insets.right
         titleLabelLeft.constant = model.insets.left
-        return self
     }
 }
