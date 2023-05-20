@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'CompositionalGridView'
-  s.version = '1.0.3'
+  s.version = '1.0.4'
   s.summary = 'A compositional collection view that can display items in a grid and list arrangement.'
   s.homepage = 'https://github.com/tiennv166/CompositionalGridView'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
