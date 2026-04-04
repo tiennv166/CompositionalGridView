@@ -16,11 +16,11 @@ jobs:
     
     strategy:
       matrix:
-        destination: ['platform=iOS Simulator,OS=16.2,name=iPhone 14 Pro']
+        destination: ['platform=iOS Simulator,OS=18.5,name=iPhone 16']
 
     steps:
     - uses: actions/checkout@v5
     - name: Build
-      run: xcodebuild clean build -scheme CompositionalGridView -destination "name=iPhone 14 Pro,OS=16.2"
+      run: xcodebuild clean build -scheme CompositionalGridView -destination "${{ matrix.destination }}"
     - name: Run tests
-      run: xcodebuild clean test -project CompositionalGridView.xcodeproj -scheme CompositionalGridView-Example -destination "name=iPhone 14 Pro,OS=16.2"
+      run: xcodebuild clean test -project CompositionalGridView.xcodeproj -scheme CompositionalGridView-Example -destination "${{ matrix.destination }}"
