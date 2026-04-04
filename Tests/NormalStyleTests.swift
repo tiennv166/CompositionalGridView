@@ -259,6 +259,7 @@ final class NormalStyleTests: QuickSpec {
     }
 }
 
+
 /// The TestCellModel struct and TestCell class are just used to create dummy data for testing purposes and are not the focus of the unit test.
 private struct TestCellModel: GridItemModelConfigurable {
     let index: Int
