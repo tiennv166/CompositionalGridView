@@ -447,7 +447,7 @@ private extension GridViewSection {
         case UICollectionView.elementKindSectionHeader:
             item = supplementaryItems.first { $0.model.viewType.isHeader }
             alignment = .top
-        case UICollectionView.elementKindSectionHeader:
+        case UICollectionView.elementKindSectionFooter:
             item = supplementaryItems.first { $0.model.viewType.isFooter }
             alignment = .bottom
         default: return nil
