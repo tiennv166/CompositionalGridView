@@ -19,9 +19,8 @@ jobs:
         destination: ['platform=iOS Simulator,OS=16.2,name=iPhone 14 Pro']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
     - name: Build
       run: xcodebuild clean build -scheme CompositionalGridView -destination "name=iPhone 14 Pro,OS=16.2"
     - name: Run tests
       run: xcodebuild clean test -project CompositionalGridView.xcodeproj -scheme CompositionalGridView-Example -destination "name=iPhone 14 Pro,OS=16.2"
-
